@@ -1,5 +1,9 @@
 # Third-Party Notices
 
+The repository's MIT License applies to original project code and
+documentation. The third-party materials listed below remain subject to
+their respective licenses.
+
 ## Chess Piece Images
 
 The chess piece images in `pieces/` are based on the Wikimedia Commons

@@ -1,7 +1,12 @@
-# CHESS_AI_MINIMAX_PROJECT
+# Chess Engine with Neural-Assisted Minimax
 
-A small, interview-friendly chess project built with `python-chess` and `pygame`.
-It supports Human vs AI gameplay with multiple AI modes:
+A Python chess engine that combines alpha-beta minimax search with a
+self-trained PyTorch move-policy model for neural-assisted move ordering. The
+project includes interactive Human-vs-AI gameplay, TSV opening-book support,
+time-bounded iterative deepening, and a reproducible training and benchmark
+pipeline.
+
+Supported AI modes:
 - `random`: picks a random legal move
 - `minimax`: uses depth-limited minimax with alpha-beta pruning, material values, and piece-square tables
 - `minimax_policy_ordered`: uses the PyTorch move-policy model only to order legal moves before classical minimax search
@@ -72,8 +77,7 @@ fixed FEN position. It reports every measured runtime, mean/median runtime,
 standard deviation, selected move, score, nodes searched, leaf nodes,
 alpha-beta cutoffs, nodes per second, completed depth, timeout status, neural
 forward-pass count, and Minimax vs Neural-Ordered Minimax node-reduction
-percentages. Measure these numbers locally before using them in a README,
-portfolio, or resume; do not invent benchmark results.
+percentages.
 
 On one local CPU-only run at fixed depth 3, Neural-Ordered Minimax reduced
 median alpha-beta node expansion by 54.7% across five built-in benchmark
@@ -118,7 +122,8 @@ python -m training.evaluate_policy --data data/policy_dataset_250k.jsonl --check
 See [`docs/AI_MODES.md`](docs/AI_MODES.md) for the detailed algorithm and neural-network audit.
 
 To adjust minimax strength/speed tradeoff, edit `MINIMAX_DEPTH` in `constants.py`.
-Higher depth plays stronger but can be slower.
+Higher depth increases the search horizon and may improve move quality, but it
+costs more computation.
 
 ## Design Notes
 
@@ -140,8 +145,19 @@ Higher depth plays stronger but can be slower.
 - The repository includes a reproducible policy-training pipeline, but raw Lichess data and large processed datasets are intentionally not committed.
 - The neural model is a move-policy model, not a scalar value evaluator.
 
-## Provenance Notes
+## License and Third-Party Assets
 
-- The included `models/lichess_policy_v1_best.pt` checkpoint was trained with the scripts in `training/`; see `docs/TRAINING.md` and `models/MODEL_CARD.md`.
-- The opening-book TSV files and chess piece image files should be published only if their source and redistribution rights are known.
-- No project license is included yet. Add one only after confirming it is compatible with any third-party data, images, and model artifacts kept in the repository.
+The original source code and documentation in this repository are licensed
+under the MIT License. See [LICENSE](LICENSE).
+
+Third-party assets retain their original licenses:
+
+- Chess opening data in `openings/` comes from
+  `lichess-org/chess-openings` and is released under CC0.
+- The Lichess Stockfish evaluation data used to train the included policy
+  checkpoint is released under CC0. Raw training data is not redistributed.
+- Chess piece images in `pieces/` are attributed to Colin M.L. Burnett's
+  Wikimedia Commons chess-piece set and licensed under CC BY-SA 3.0.
+
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution and
+license details.
