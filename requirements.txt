@@ -1,0 +1,4 @@
+python-chess==1.999
+pygame==2.6.1
+numpy==2.2.4
+torch==2.6.0
